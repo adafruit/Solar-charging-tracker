@@ -1,6 +1,9 @@
-/* Sensor test sketch
-  for more information see http://www.ladyada.net/make/logshield/lighttemp.html
-  */
+/* 
+Portable solar panel efficiency tracker. For testing out solar panels!
+See http://www.ladyada.net/make/solarlogger for more information
+
+Code is public domain, enjoy! 
+*/
 
 // include the library code:
 #include <LiquidCrystal.h>
@@ -32,7 +35,21 @@ void setup(void) {
   lcd.clear();
   // If you want to set the aref to something other than 5v
   analogReference(EXTERNAL);
+  
+  byte delta[8] = {
+	B00000,
+	B00100,
+	B00100,
+	B01010,
+	B01010,
+	B10001,
+	B11111,
+	B00000
+};
+
+  lcd.createChar(0, delta);
 }
+
 
 
 void loop(void) {
@@ -51,14 +68,20 @@ void loop(void) {
   Serial.println(lipoV);     // the raw analog reading
   
   lcd.setCursor(0, 0);
-  lcd.print("LiPo = ");
+  lcd.print("LiPo=");
   lcd.print(lipoV);
-     
+  lcd.print(' ');
+  lcd.write(0);
+  
   adcreading = analogRead(PVPin);  
   float PVV = adcreading;
   PVV *= aref_voltage;
   PVV /= 1024;
   PVV *= PVMult;
+  
+  lcd.print((int)((PVV-lipoV) * 1000), DEC);  // in mV
+  lcd.print("mV");
+  
   Serial.print("PV voltage = ");
   Serial.println(PVV);     // the raw analog reading
 
@@ -73,10 +96,10 @@ void loop(void) {
   currentI *= currentMult;
   Serial.print("Current (mA) = ");
   Serial.println(currentI);     // the raw analog reading
-
-  lcd.print(" I=");
-  lcd.print(currentI);
   
+  lcd.print(" I=");
+  lcd.print((int)currentI);
+  lcd.print("mA");
   delay(1000);
 }
 
