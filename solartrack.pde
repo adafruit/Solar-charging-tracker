@@ -72,7 +72,7 @@ void loop(void) {
   lcd.print("LiPo=");
   lcd.print(lipoV);
   lcd.print(' ');
-  lcd.write(0);
+  lcd.write((uint8_t)0);
   
   adcreading = analogRead(PVPin);  
   float PVV = adcreading;
