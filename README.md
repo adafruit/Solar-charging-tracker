@@ -1,7 +1,9 @@
 ## This repository has been archived
 
 This code was migrated to https://github.com/adafruit/Adafruit_Learning_System_Guides/tree/master/Solar_Charger_Tracker
+
 ----------------------------------
+
 ## Adafruit Solar Charger Tracker Tutorial Repository
 
 The project was created by Limor "Ladyada" Fried.
